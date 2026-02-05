@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: prototipo-rendimiento
+    env: static
+    staticPublishPath: ./public
+    buildCommand: echo "Static site ready"

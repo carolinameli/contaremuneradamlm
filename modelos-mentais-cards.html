@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelos Mentais - Conta Remunerada México</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mp-blue: #009EE3;
+            --mp-blue-dark: #0077B5;
+            --mp-yellow: #FFE600;
+            --warning-orange: #FF6B35;
+            --success-green: #00A650;
+            --error-red: #F23D4F;
+            --gray-100: #F5F5F5;
+            --gray-200: #EEEEEE;
+            --gray-300: #E0E0E0;
+            --gray-600: #666666;
+            --gray-800: #333333;
+            --gray-900: #1A1A1A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .language-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 30px 0;
+        }
+
+        .lang-btn {
+            padding: 12px 28px;
+            border: 2px solid var(--mp-blue);
+            background: white;
+            color: var(--mp-blue);
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            background: var(--mp-blue);
+            color: white;
+        }
+
+        .lang-btn.active {
+            background: var(--mp-blue);
+            color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin: 50px 0 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--mp-blue);
+            display: inline-block;
+            width: 100%;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .mental-model-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .mental-model-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            padding: 25px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .card-number {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        /* Color schemes for each model */
+        .model-1 .card-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .model-2 .card-header { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .model-3 .card-header { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .model-4 .card-header { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .belief-section {
+            margin-bottom: 20px;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-600);
+            margin-bottom: 10px;
+        }
+
+        .section-label .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .belief-text {
+            background: var(--gray-100);
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: var(--gray-800);
+            font-style: italic;
+            line-height: 1.5;
+            border-left: 4px solid;
+        }
+
+        .model-1 .belief-text { border-color: #764ba2; }
+        .model-2 .belief-text { border-color: #f5576c; }
+        .model-3 .belief-text { border-color: #00f2fe; }
+        .model-4 .belief-text { border-color: #38f9d7; }
+
+        .conflict-section {
+            margin-bottom: 20px;
+        }
+
+        .conflict-box {
+            background: #FFF9E6;
+            border: 1px solid #FFE082;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: var(--gray-800);
+            line-height: 1.5;
+        }
+
+        .doubt-section {
+            margin-bottom: 20px;
+        }
+
+        .doubt-box {
+            background: #FFF5F5;
+            border: 1px solid #FFCDD2;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: var(--gray-800);
+            line-height: 1.5;
+        }
+
+        .doubt-box .question {
+            display: block;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .doubt-box .question:last-child {
+            margin-bottom: 0;
+        }
+
+        .doubt-box .question::before {
+            content: '?';
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+            color: var(--error-red);
+        }
+
+        .evidence-section {
+            padding-top: 15px;
+            border-top: 1px dashed var(--gray-300);
+        }
+
+        .evidence-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+
+        .evidence-icon {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Summary Table */
+        .summary-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+        }
+
+        .summary-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .summary-table th {
+            background: var(--mp-blue);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .summary-table th:first-child {
+            border-radius: 12px 0 0 0;
+        }
+
+        .summary-table th:last-child {
+            border-radius: 0 12px 0 0;
+        }
+
+        .summary-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--gray-200);
+            color: var(--gray-800);
+        }
+
+        .summary-table tr:last-child td:first-child {
+            border-radius: 0 0 0 12px;
+        }
+
+        .summary-table tr:last-child td:last-child {
+            border-radius: 0 0 12px 0;
+        }
+
+        .summary-table tr:hover td {
+            background: var(--gray-100);
+        }
+
+        .friction-tag {
+            display: inline-block;
+            background: #FFEBEE;
+            color: var(--error-red);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .language-section {
+            display: none;
+        }
+
+        .language-section.active {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-section {
+                padding: 20px;
+                overflow-x: auto;
+            }
+
+            .summary-table {
+                min-width: 600px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                padding: 20px;
+            }
+
+            .language-toggle {
+                display: none;
+            }
+
+            .mental-model-card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--gray-300);
+            }
+
+            .mental-model-card:hover {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🧠 Modelos Mentais de Usuários</h1>
+            <p>Conta Remunerada México - Como usuários newbies interpretam a proposta de valor de 13-14% ao ano</p>
+        </header>
+
+        <div class="language-toggle">
+            <button class="lang-btn active" onclick="showLanguage('pt')">🇧🇷 Português</button>
+            <button class="lang-btn" onclick="showLanguage('es')">🇲🇽 Español</button>
+        </div>
+
+        <!-- PORTUGUÊS -->
+        <section id="pt-section" class="language-section active">
+            
+            <div class="cards-grid">
+                <!-- Card 1 - Investidor Tradicional -->
+                <article class="mental-model-card model-1">
+                    <div class="card-header">
+                        <div class="card-icon">🏦</div>
+                        <div class="card-number">Modelo Mental #1</div>
+                        <h2 class="card-title">O "Investidor Tradicional"</h2>
+                        <p class="card-subtitle">Rendimento = Dinheiro Bloqueado</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="belief-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #764ba2;"></span>
+                                A Crença
+                            </div>
+                            <div class="belief-text">
+                                "Se rende 14% ao ano, o dinheiro precisa ficar parado lá por um ano."
+                            </div>
+                        </div>
+                        
+                        <div class="conflict-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #FFB300;"></span>
+                                O Conflito
+                            </div>
+                            <div class="conflict-box">
+                                A palavra <strong>"Anual"</strong> entra em conflito direto com a promessa de <strong>"disponibilidade diária"</strong>. O usuário não consegue conciliar alta rentabilidade com liquidez imediata.
+                            </div>
+                        </div>
+
+                        <div class="doubt-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #F44336;"></span>
+                                As Dúvidas
+                            </div>
+                            <div class="doubt-box">
+                                <span class="question">"Se eu tirar o dinheiro antes de um ano, perco tudo?"</span>
+                                <span class="question">"O rendimento é sobre o saldo médio ou sobre o depósito inicial?"</span>
+                            </div>
+                        </div>
+
+                        <div class="evidence-section">
+                            <div class="evidence-box">
+                                <span class="evidence-icon">📋</span>
+                                <span><strong>Evidência:</strong> Usuários como Rodolfo e Verónica assumiram que funcionava como investimento bancário onde se deve cumprir um prazo (6 meses ou 1 ano) para ver o ganho.</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2 - Consumidor de Recompensas -->
+                <article class="mental-model-card model-2">
+                    <div class="card-header">
+                        <div class="card-icon">🎁</div>
+                        <div class="card-number">Modelo Mental #2</div>
+                        <h2 class="card-title">O "Consumidor de Recompensas"</h2>
+                        <p class="card-subtitle">Rendimento = Cashback / Bônus</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="belief-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #f5576c;"></span>
+                                A Crença
+                            </div>
+                            <div class="belief-text">
+                                "O dinheiro cresce quando eu <strong>uso</strong> o aplicativo para comprar coisas."
+                            </div>
+                        </div>
+                        
+                        <div class="conflict-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #FFB300;"></span>
+                                O Conflito
+                            </div>
+                            <div class="conflict-box">
+                                O usuário acredita que precisa <strong>gastar</strong> para ganhar, confundindo rendimento passivo (juros sobre saldo) com <strong>cashback</strong> ativo (retorno sobre gastos).
+                            </div>
+                        </div>
+
+                        <div class="doubt-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #F44336;"></span>
+                                As Dúvidas
+                            </div>
+                            <div class="doubt-box">
+                                <span class="question">"Ganho 14% de volta em cada compra?"</span>
+                                <span class="question">"Tenho que fazer compras para ativar o ganho?"</span>
+                            </div>
+                        </div>
+
+                        <div class="evidence-section">
+                            <div class="evidence-box">
+                                <span class="evidence-icon">📋</span>
+                                <span><strong>Evidência:</strong> Usuários como Dora interpretaram "gerar ganhos" como receber bonificações por transações ou compras, não por deixar o dinheiro parado.</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 3 - Cético Desconfiado -->
+                <article class="mental-model-card model-3">
+                    <div class="card-header">
+                        <div class="card-icon">🔍</div>
+                        <div class="card-number">Modelo Mental #3</div>
+                        <h2 class="card-title">O "Cético Desconfiado"</h2>
+                        <p class="card-subtitle">Alta Promessa = Risco Oculto</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="belief-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #00f2fe;"></span>
+                                A Crença
+                            </div>
+                            <div class="belief-text">
+                                "Ninguém dá dinheiro de graça. Se oferecem 14%, deve haver letras miúdas, taxas escondidas ou risco de perder o dinheiro."
+                            </div>
+                        </div>
+                        
+                        <div class="conflict-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #FFB300;"></span>
+                                O Conflito
+                            </div>
+                            <div class="conflict-box">
+                                A insistência do app para <strong>"Ingresar dinero"</strong> antes de o usuário entender o produto gera um alerta de <strong>fraude ou golpe ("estafa")</strong>.
+                            </div>
+                        </div>
+
+                        <div class="doubt-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #F44336;"></span>
+                                As Dúvidas
+                            </div>
+                            <div class="doubt-box">
+                                <span class="question">"Qual é o valor mínimo? 3.000 pesos?"</span>
+                                <span class="question">"Isso é seguro? O dinheiro vai 'queimar' (sumir)?"</span>
+                            </div>
+                        </div>
+
+                        <div class="evidence-section">
+                            <div class="evidence-box">
+                                <span class="evidence-icon">🔥</span>
+                                <span><strong>Simbologia Negativa:</strong> O ícone de fogo foi interpretado negativamente por Erika como "dinheiro queimando" ou urgência para gastar.</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 4 - Gamificação/Tarefa -->
+                <article class="mental-model-card model-4">
+                    <div class="card-header">
+                        <div class="card-icon">🎮</div>
+                        <div class="card-number">Modelo Mental #4</div>
+                        <h2 class="card-title">O "Jogador de Missões"</h2>
+                        <p class="card-subtitle">Rendimento = Prêmio por Conclusão</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="belief-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #38f9d7;"></span>
+                                A Crença
+                            </div>
+                            <div class="belief-text">
+                                "O rendimento de 13% é um prêmio desbloqueável. Eu só ganho essa taxa <strong>se</strong> e <strong>quando</strong> eu completar todas as tarefas da lista."
+                            </div>
+                        </div>
+                        
+                        <div class="conflict-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #FFB300;"></span>
+                                O Conflito
+                            </div>
+                            <div class="conflict-box">
+                                O usuário não entende o rendimento como uma característica <strong>intrínseca</strong> da conta, mas como uma <strong>recompensa condicional</strong> e temporária.
+                            </div>
+                        </div>
+
+                        <div class="doubt-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #F44336;"></span>
+                                As Dúvidas
+                            </div>
+                            <div class="doubt-box">
+                                <span class="question">"Se eu não pedir o cartão físico, não ganho os 13%?"</span>
+                                <span class="question">"Preciso cumprir os 5 passos para começar a render?"</span>
+                            </div>
+                        </div>
+
+                        <div class="evidence-section">
+                            <div class="evidence-box">
+                                <span class="evidence-icon">📋</span>
+                                <span><strong>Evidência:</strong> Ana Rafaela entendeu que completar as tarefas (como pedir o cartão) era requisito obrigatório para acessar os benefícios financeiros.</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Summary Table PT -->
+            <div class="summary-section">
+                <h3 class="summary-title">📊 Resumo das Lacunas de Entendimento</h3>
+                <table class="summary-table">
+                    <thead>
+                        <tr>
+                            <th>Conceito do Produto</th>
+                            <th>Modelo Mental do Usuário</th>
+                            <th>Fricção Resultante</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Rendimento sobre Saldo</strong></td>
+                            <td>Cashback sobre Gasto</td>
+                            <td><span class="friction-tag">Usuário espera gastar para ganhar, não poupar</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Liquidez Diária</strong></td>
+                            <td>Investimento a Prazo Fixo</td>
+                            <td><span class="friction-tag">Medo de "bloquear" o dinheiro ou perder ganhos ao sacar</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Taxa Anual (13/14%)</strong></td>
+                            <td>Ganho Diário ou Anual Fixo</td>
+                            <td><span class="friction-tag">Expectativa irreal de 13% todo dia ou frustração por esperar 1 ano</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Benefício Automático</strong></td>
+                            <td>Recompensa por Tarefa</td>
+                            <td><span class="friction-tag">Crença de que é necessário desbloquear cumprindo etapas</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ESPAÑOL -->
+        <section id="es-section" class="language-section">
+            
+            <div class="cards-grid">
+                <!-- Card 1 - Inversionista Tradicional -->
+                <article class="mental-model-card model-1">
+                    <div class="card-header">
+                        <div class="card-icon">🏦</div>
+                        <div class="card-number">Modelo Mental #1</div>
+                        <h2 class="card-title">El "Inversionista Tradicional"</h2>
+                        <p class="card-subtitle">Rendimiento = Dinero Bloqueado</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="belief-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #764ba2;"></span>
+                                La Creencia
+                            </div>
+                            <div class="belief-text">
+                                "Si rinde 14% al año, el dinero tiene que quedarse ahí durante un año."
+                            </div>
+                        </div>
+                        
+                        <div class="conflict-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #FFB300;"></span>
+                                El Conflicto
+                            </div>
+                            <div class="conflict-box">
+                                La palabra <strong>"Anual"</strong> entra en conflicto directo con la promesa de <strong>"disponibilidad diaria"</strong>. El usuario no puede conciliar alta rentabilidad con liquidez inmediata.
+                            </div>
+                        </div>
+
+                        <div class="doubt-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #F44336;"></span>
+                                Las Dudas
+                            </div>
+                            <div class="doubt-box">
+                                <span class="question">"¿Si retiro el dinero antes de un año, pierdo todo?"</span>
+                                <span class="question">"¿El rendimiento es sobre el saldo promedio o sobre el depósito inicial?"</span>
+                            </div>
+                        </div>
+
+                        <div class="evidence-section">
+                            <div class="evidence-box">
+                                <span class="evidence-icon">📋</span>
+                                <span><strong>Evidencia:</strong> Usuarios como Rodolfo y Verónica asumieron que funcionaba como inversión bancaria donde se debe cumplir un plazo (6 meses o 1 año) para ver la ganancia.</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2 - Consumidor de Recompensas -->
+                <article class="mental-model-card model-2">
+                    <div class="card-header">
+                        <div class="card-icon">🎁</div>
+                        <div class="card-number">Modelo Mental #2</div>
+                        <h2 class="card-title">El "Consumidor de Recompensas"</h2>
+                        <p class="card-subtitle">Rendimiento = Cashback / Bonificación</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="belief-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #f5576c;"></span>
+                                La Creencia
+                            </div>
+                            <div class="belief-text">
+                                "El dinero crece cuando <strong>uso</strong> la aplicación para comprar cosas."
+                            </div>
+                        </div>
+                        
+                        <div class="conflict-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #FFB300;"></span>
+                                El Conflicto
+                            </div>
+                            <div class="conflict-box">
+                                El usuario cree que necesita <strong>gastar</strong> para ganar, confundiendo rendimiento pasivo (intereses sobre saldo) con <strong>cashback</strong> activo (retorno sobre gastos).
+                            </div>
+                        </div>
+
+                        <div class="doubt-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #F44336;"></span>
+                                Las Dudas
+                            </div>
+                            <div class="doubt-box">
+                                <span class="question">"¿Gano 14% de regreso en cada compra?"</span>
+                                <span class="question">"¿Tengo que hacer compras para activar la ganancia?"</span>
+                            </div>
+                        </div>
+
+                        <div class="evidence-section">
+                            <div class="evidence-box">
+                                <span class="evidence-icon">📋</span>
+                                <span><strong>Evidencia:</strong> Usuarios como Dora interpretaron "generar ganancias" como recibir bonificaciones por transacciones o compras, no por dejar el dinero quieto.</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 3 - Escéptico Desconfiado -->
+                <article class="mental-model-card model-3">
+                    <div class="card-header">
+                        <div class="card-icon">🔍</div>
+                        <div class="card-number">Modelo Mental #3</div>
+                        <h2 class="card-title">El "Escéptico Desconfiado"</h2>
+                        <p class="card-subtitle">Alta Promesa = Riesgo Oculto</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="belief-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #00f2fe;"></span>
+                                La Creencia
+                            </div>
+                            <div class="belief-text">
+                                "Nadie da dinero gratis. Si ofrecen 14%, debe haber letra pequeña, comisiones ocultas o riesgo de perder el dinero."
+                            </div>
+                        </div>
+                        
+                        <div class="conflict-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #FFB300;"></span>
+                                El Conflicto
+                            </div>
+                            <div class="conflict-box">
+                                La insistencia de la app para <strong>"Ingresar dinero"</strong> antes de que el usuario entienda el producto genera una alerta de <strong>fraude o estafa</strong>.
+                            </div>
+                        </div>
+
+                        <div class="doubt-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #F44336;"></span>
+                                Las Dudas
+                            </div>
+                            <div class="doubt-box">
+                                <span class="question">"¿Cuál es el monto mínimo? ¿3,000 pesos?"</span>
+                                <span class="question">"¿Esto es seguro? ¿El dinero se va a 'quemar' (desaparecer)?"</span>
+                            </div>
+                        </div>
+
+                        <div class="evidence-section">
+                            <div class="evidence-box">
+                                <span class="evidence-icon">🔥</span>
+                                <span><strong>Simbología Negativa:</strong> El ícono de fuego fue interpretado negativamente por Erika como "dinero quemándose" o urgencia para gastar.</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 4 - Gamificación/Tarea -->
+                <article class="mental-model-card model-4">
+                    <div class="card-header">
+                        <div class="card-icon">🎮</div>
+                        <div class="card-number">Modelo Mental #4</div>
+                        <h2 class="card-title">El "Jugador de Misiones"</h2>
+                        <p class="card-subtitle">Rendimiento = Premio por Completar</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="belief-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #38f9d7;"></span>
+                                La Creencia
+                            </div>
+                            <div class="belief-text">
+                                "El rendimiento del 13% es un premio desbloqueable. Solo gano esa tasa <strong>si</strong> y <strong>cuando</strong> complete todas las tareas de la lista."
+                            </div>
+                        </div>
+                        
+                        <div class="conflict-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #FFB300;"></span>
+                                El Conflicto
+                            </div>
+                            <div class="conflict-box">
+                                El usuario no entiende el rendimiento como una característica <strong>intrínseca</strong> de la cuenta, sino como una <strong>recompensa condicional</strong> y temporal.
+                            </div>
+                        </div>
+
+                        <div class="doubt-section">
+                            <div class="section-label">
+                                <span class="dot" style="background: #F44336;"></span>
+                                Las Dudas
+                            </div>
+                            <div class="doubt-box">
+                                <span class="question">"¿Si no pido la tarjeta física, no gano el 13%?"</span>
+                                <span class="question">"¿Necesito cumplir los 5 pasos para empezar a generar?"</span>
+                            </div>
+                        </div>
+
+                        <div class="evidence-section">
+                            <div class="evidence-box">
+                                <span class="evidence-icon">📋</span>
+                                <span><strong>Evidencia:</strong> Ana Rafaela entendió que completar las tareas (como pedir la tarjeta) era requisito obligatorio para acceder a los beneficios financieros.</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Summary Table ES -->
+            <div class="summary-section">
+                <h3 class="summary-title">📊 Resumen de Brechas de Entendimiento</h3>
+                <table class="summary-table">
+                    <thead>
+                        <tr>
+                            <th>Concepto del Producto</th>
+                            <th>Modelo Mental del Usuario</th>
+                            <th>Fricción Resultante</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Rendimiento sobre Saldo</strong></td>
+                            <td>Cashback sobre Gasto</td>
+                            <td><span class="friction-tag">Usuario espera gastar para ganar, no ahorrar</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Liquidez Diaria</strong></td>
+                            <td>Inversión a Plazo Fijo</td>
+                            <td><span class="friction-tag">Miedo de "bloquear" el dinero o perder ganancias al retirar</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tasa Anual (13/14%)</strong></td>
+                            <td>Ganancia Diaria o Anual Fija</td>
+                            <td><span class="friction-tag">Expectativa irreal de 13% cada día o frustración por esperar 1 año</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Beneficio Automático</strong></td>
+                            <td>Recompensa por Tarea</td>
+                            <td><span class="friction-tag">Creencia de que es necesario desbloquear cumpliendo pasos</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        function showLanguage(lang) {
+            // Hide all sections
+            document.querySelectorAll('.language-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active from all buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(lang + '-section').classList.add('active');
+            
+            // Activate clicked button
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

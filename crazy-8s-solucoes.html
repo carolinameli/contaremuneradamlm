@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crazy 8s - Soluções Conta Remunerada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mp-blue: #009EE3;
+            --mp-blue-light: #E6F7FF;
+            --mp-yellow: #FFE600;
+            --mp-green: #00A650;
+            --purple: #7C3AED;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --amber: #F59E0B;
+            --red: #EF4444;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-100);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--mp-blue), var(--cyan));
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--gray-900);
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 30px 0;
+        }
+
+        .lang-btn {
+            padding: 12px 28px;
+            border: 2px solid var(--mp-blue);
+            background: white;
+            color: var(--mp-blue);
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            background: var(--mp-blue-light);
+        }
+
+        .lang-btn.active {
+            background: var(--mp-blue);
+            color: white;
+        }
+
+        .language-section {
+            display: none;
+        }
+
+        .language-section.active {
+            display: block;
+        }
+
+        /* Ideas Grid */
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        @media (max-width: 1100px) {
+            .ideas-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Idea Card */
+        .idea-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .idea-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .idea-header {
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .idea-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .idea-card:nth-child(1) .idea-number { background: linear-gradient(135deg, #3B82F6, #1D4ED8); }
+        .idea-card:nth-child(2) .idea-number { background: linear-gradient(135deg, #8B5CF6, #6D28D9); }
+        .idea-card:nth-child(3) .idea-number { background: linear-gradient(135deg, #06B6D4, #0891B2); }
+        .idea-card:nth-child(4) .idea-number { background: linear-gradient(135deg, #F59E0B, #D97706); }
+        .idea-card:nth-child(5) .idea-number { background: linear-gradient(135deg, #10B981, #059669); }
+        .idea-card:nth-child(6) .idea-number { background: linear-gradient(135deg, #EC4899, #DB2777); }
+        .idea-card:nth-child(7) .idea-number { background: linear-gradient(135deg, #EF4444, #DC2626); }
+        .idea-card:nth-child(8) .idea-number { background: linear-gradient(135deg, #6366F1, #4F46E5); }
+
+        .idea-title-section {
+            flex: 1;
+        }
+
+        .idea-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .idea-model {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: var(--gray-100);
+            color: var(--gray-600);
+        }
+
+        .idea-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 400px;
+        }
+
+        @media (max-width: 700px) {
+            .idea-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Mockup Side */
+        .mockup-side {
+            background: linear-gradient(180deg, #F8FAFC 0%, #E2E8F0 100%);
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .phone-mockup {
+            width: 220px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 8px solid #1F2937;
+        }
+
+        .phone-notch {
+            height: 25px;
+            background: #1F2937;
+            border-radius: 0 0 15px 15px;
+            margin: 0 50px;
+        }
+
+        .phone-screen {
+            padding: 15px;
+            min-height: 320px;
+            font-size: 0.75rem;
+        }
+
+        /* Info Side */
+        .info-side {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .info-block {
+            background: var(--gray-50);
+            border-radius: 14px;
+            padding: 15px;
+        }
+
+        .info-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-500);
+            margin-bottom: 8px;
+        }
+
+        .info-label .icon {
+            font-size: 0.9rem;
+        }
+
+        .info-text {
+            font-size: 0.9rem;
+            color: var(--gray-700);
+            line-height: 1.5;
+        }
+
+        .info-block.flow {
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+        }
+
+        .info-block.flow .info-label { color: #2563EB; }
+
+        .info-block.resolve {
+            background: #ECFDF5;
+            border: 1px solid #A7F3D0;
+        }
+
+        .info-block.resolve .info-label { color: #059669; }
+
+        .info-block.ux {
+            background: #FEF3C7;
+            border: 1px solid #FCD34D;
+        }
+
+        .info-block.ux .info-label { color: #D97706; }
+
+        /* Phone Screen Components */
+        .screen-header {
+            text-align: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 12px;
+        }
+
+        .screen-balance {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
+        .screen-balance-label {
+            font-size: 0.65rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .screen-hero {
+            background: linear-gradient(135deg, var(--mp-blue), #0077B5);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .screen-hero h3 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .screen-hero p {
+            font-size: 0.65rem;
+            opacity: 0.9;
+        }
+
+        .screen-simulator {
+            background: var(--gray-50);
+            border: 2px solid var(--mp-blue);
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .simulator-input {
+            background: white;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 0.7rem;
+            color: var(--gray-600);
+            margin-bottom: 8px;
+        }
+
+        .simulator-result {
+            background: #ECFDF5;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .simulator-result .amount {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--mp-green);
+        }
+
+        .simulator-result .label {
+            font-size: 0.6rem;
+            color: var(--gray-600);
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--mp-green);
+        }
+
+        .timeline-date {
+            font-size: 0.65rem;
+            color: var(--gray-500);
+            flex: 1;
+        }
+
+        .timeline-amount {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--mp-green);
+        }
+
+        .comparison-table {
+            width: 100%;
+            font-size: 0.65rem;
+        }
+
+        .comparison-table th {
+            padding: 8px 5px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .comparison-table th:first-child {
+            color: var(--red);
+            background: #FEE2E2;
+            border-radius: 8px 0 0 0;
+        }
+
+        .comparison-table th:last-child {
+            color: var(--mp-green);
+            background: #D1FAE5;
+            border-radius: 0 8px 0 0;
+        }
+
+        .comparison-table td {
+            padding: 6px 5px;
+            text-align: center;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .comparison-table td:first-child {
+            background: #FEF2F2;
+        }
+
+        .comparison-table td:last-child {
+            background: #ECFDF5;
+        }
+
+        .bottom-sheet {
+            background: white;
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px 15px;
+            margin-top: 20px;
+        }
+
+        .bottom-sheet-handle {
+            width: 40px;
+            height: 4px;
+            background: var(--gray-300);
+            border-radius: 2px;
+            margin: 0 auto 15px;
+        }
+
+        .bottom-sheet-text {
+            font-size: 0.75rem;
+            color: var(--gray-700);
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+            font-size: 0.7rem;
+            color: var(--gray-700);
+        }
+
+        .checklist-check {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--mp-green);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: 700;
+        }
+
+        .tooltip-box {
+            background: var(--gray-800);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            line-height: 1.5;
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .tooltip-box::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid var(--gray-800);
+        }
+
+        .social-proof {
+            background: #F0F9FF;
+            border: 1px solid #BAE6FD;
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-proof-avatars {
+            display: flex;
+        }
+
+        .social-proof-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--mp-blue);
+            border: 2px solid white;
+            margin-left: -8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.5rem;
+            color: white;
+        }
+
+        .social-proof-avatar:first-child {
+            margin-left: 0;
+        }
+
+        .social-proof-text {
+            font-size: 0.65rem;
+            color: var(--gray-600);
+            line-height: 1.4;
+        }
+
+        /* Insights Section */
+        .insights-section {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .insights-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .insights-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--amber), var(--pink));
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .insights-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .insights-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .insight-card {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .insight-card:hover {
+            border-color: var(--mp-blue);
+            background: white;
+        }
+
+        .insight-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .insight-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .insight-desc {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+
+        /* Print */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .language-toggle {
+                display: none;
+            }
+
+            .idea-card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--gray-200);
+            }
+
+            .ideas-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-badge">
+                <span>⚡</span>
+                <span>Crazy 8s</span>
+            </div>
+            <h1>Soluções para a Conta Remunerada</h1>
+            <p>8 ideias concretas para melhorar o entendimento do produto, atacando os modelos mentais identificados</p>
+        </header>
+
+        <div class="language-toggle">
+            <button class="lang-btn active" onclick="showLanguage('pt')">🇧🇷 Português</button>
+            <button class="lang-btn" onclick="showLanguage('es')">🇲🇽 Español</button>
+        </div>
+
+        <!-- PORTUGUÊS -->
+        <section id="pt-section" class="language-section active">
+            <div class="ideas-grid">
+                
+                <!-- Idea 1 -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">1</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">"Rende todo dia. Sai quando quiser."</h3>
+                            <span class="idea-model">🏦 Modelo 1 — Investidor Tradicional</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen">
+                                    <div class="screen-header">
+                                        <div class="screen-balance-label">Seu saldo</div>
+                                        <div class="screen-balance">$5,240.00</div>
+                                    </div>
+                                    <div class="screen-hero">
+                                        <h3>Rende todos os dias.<br>Seu dinheiro fica livre.</h3>
+                                        <p>O 13% é anualizado. Você ganha um pedacinho todo dia.</p>
+                                    </div>
+                                    <div style="text-align: center; padding: 15px;">
+                                        <div style="font-size: 0.65rem; color: #6B7280;">Rendeu hoje</div>
+                                        <div style="font-size: 1.2rem; font-weight: 700; color: #00A650;">+$1.87</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Onde no fluxo</div>
+                                <div class="info-text">Hero da home da conta remunerada e primeira tela pós-ativação</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resolve</div>
+                                <div class="info-text">Medo de dinheiro bloqueado e confusão entre "anual" e "tempo mínimo"</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text">Esse texto precisa ser <strong>persistente</strong>, não só educativo. Repetição aqui é virtude.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea 2 -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">2</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">Simulador "E se eu tirar hoje?"</h3>
+                            <span class="idea-model">🏦 Modelo 1 — Investidor Tradicional</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen">
+                                    <div class="screen-header">
+                                        <div class="screen-balance-label">Rendendo</div>
+                                        <div class="screen-balance">$3,500.00</div>
+                                    </div>
+                                    <div class="screen-simulator">
+                                        <div style="font-size: 0.7rem; font-weight: 600; margin-bottom: 8px; color: #374151;">🧮 Se eu tirar hoje...</div>
+                                        <div class="simulator-input">
+                                            Quanto quer retirar? <strong>$3,500.00</strong>
+                                        </div>
+                                        <div class="simulator-result">
+                                            <div class="amount">+$42.35</div>
+                                            <div class="label">Você ganhou até agora</div>
+                                            <div style="font-size: 0.6rem; color: #059669; margin-top: 5px; font-weight: 600;">✓ Pode usar agora. É seu.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Onde no fluxo</div>
+                                <div class="info-text">Tela de detalhes do rendimento e tooltip no saldo rendendo</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resolve</div>
+                                <div class="info-text">Ansiedade de perda e sensação de "preciso esperar"</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text">Transforma um conceito abstrato em <strong>prova concreta</strong>. Não é educativo, é tranquilizador.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea 3 -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">3</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">Linha do tempo diária de ganhos</h3>
+                            <span class="idea-model">🏦 Modelo 1 + 🔍 Modelo 3</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen">
+                                    <div style="font-size: 0.75rem; font-weight: 700; margin-bottom: 12px; color: #374151;">📈 Histórico de ganhos</div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-date">Hoje, 23 Jan</div>
+                                        <div class="timeline-amount">+$1.87</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-date">Ontem, 22 Jan</div>
+                                        <div class="timeline-amount">+$1.84</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-date">21 Jan</div>
+                                        <div class="timeline-amount">+$1.81</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-date">20 Jan</div>
+                                        <div class="timeline-amount">+$1.79</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-date">19 Jan</div>
+                                        <div class="timeline-amount">+$1.76</div>
+                                    </div>
+                                    <div style="text-align: center; margin-top: 15px; padding: 10px; background: #ECFDF5; border-radius: 8px;">
+                                        <div style="font-size: 0.6rem; color: #6B7280;">Total este mês</div>
+                                        <div style="font-size: 1rem; font-weight: 700; color: #00A650;">+$42.35</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Onde no fluxo</div>
+                                <div class="info-text">Histórico da conta e detalhe do rendimento</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resolve</div>
+                                <div class="info-text">Ceticismo ("isso existe mesmo?") e sensação de truque escondido</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text">Ver dinheiro pingando todo dia <strong>mata mais objeções</strong> do que qualquer texto.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea 4 -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">4</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">Quebra explícita do modelo "cashback"</h3>
+                            <span class="idea-model">🎁 Modelo 2 — Consumidor de Recompensas</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen">
+                                    <div style="font-size: 0.8rem; font-weight: 700; margin-bottom: 12px; text-align: center; color: #374151;">Como funciona?</div>
+                                    <table class="comparison-table">
+                                        <thead>
+                                            <tr>
+                                                <th>❌ Não é</th>
+                                                <th>✅ É</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Cashback</td>
+                                                <td>Rendimento automático</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Precisa pagar algo</td>
+                                                <td>Só deixar o dinheiro</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Depende de compras</td>
+                                                <td>Independe de uso</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div style="background: #EFF6FF; padding: 12px; border-radius: 10px; margin-top: 15px; text-align: center;">
+                                        <div style="font-size: 0.75rem; font-weight: 700; color: #1D4ED8;">Você não precisa usar.</div>
+                                        <div style="font-size: 0.75rem; font-weight: 700; color: #1D4ED8;">Só deixar.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Onde no fluxo</div>
+                                <div class="info-text">Onboarding e primeira tela educativa</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resolve</div>
+                                <div class="info-text">Associação errada com pagamentos e expectativa de "ganho por ação"</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text"><strong>Comparação explícita > metáforas.</strong> Usuários entendem melhor contrastes diretos.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea 5 -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">5</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">Mensagem antes do primeiro gasto</h3>
+                            <span class="idea-model">🏦 Modelo 1 + 🎁 Modelo 2</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen" style="background: rgba(0,0,0,0.3); padding: 0;">
+                                    <div style="padding: 15px; opacity: 0.5;">
+                                        <div style="font-size: 0.7rem; color: white;">Pagando para</div>
+                                        <div style="font-size: 0.9rem; font-weight: 700; color: white;">OXXO - Compra</div>
+                                        <div style="font-size: 1.2rem; font-weight: 800; color: white; margin-top: 5px;">$150.00</div>
+                                    </div>
+                                    <div class="bottom-sheet">
+                                        <div class="bottom-sheet-handle"></div>
+                                        <div style="font-size: 1.2rem; text-align: center; margin-bottom: 10px;">✨</div>
+                                        <div class="bottom-sheet-text">
+                                            <strong>Pode gastar tranquilo.</strong><br><br>
+                                            Seu dinheiro rendeu até agora e <strong>continua rendendo</strong> no que sobrar.
+                                        </div>
+                                        <div style="background: #00A650; color: white; text-align: center; padding: 12px; border-radius: 10px; margin-top: 15px; font-size: 0.8rem; font-weight: 600;">
+                                            Entendi, continuar
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Onde no fluxo</div>
+                                <div class="info-text">Primeira vez que o usuário tenta pagar algo com saldo rendendo</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resolve</div>
+                                <div class="info-text">Medo de "perder o rendimento" ao gastar e trava no uso do dinheiro</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text">Intervenção no <strong>momento da dúvida real</strong>, não antes.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea 6 -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">6</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">"Sem truque": selo de transparência</h3>
+                            <span class="idea-model">🔍 Modelo 3 — Cético Desconfiado</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen">
+                                    <div style="font-size: 0.8rem; font-weight: 700; margin-bottom: 15px; text-align: center; color: #374151;">🛡️ Sem letras miúdas</div>
+                                    <div style="background: #F0FDF4; border: 2px solid #86EFAC; border-radius: 14px; padding: 15px;">
+                                        <div class="checklist-item">
+                                            <div class="checklist-check">✓</div>
+                                            <span>Sem valor mínimo</span>
+                                        </div>
+                                        <div class="checklist-item">
+                                            <div class="checklist-check">✓</div>
+                                            <span>Sem taxa de manutenção</span>
+                                        </div>
+                                        <div class="checklist-item">
+                                            <div class="checklist-check">✓</div>
+                                            <span>Sem tarefas obrigatórias</span>
+                                        </div>
+                                        <div class="checklist-item">
+                                            <div class="checklist-check">✓</div>
+                                            <span>Dinheiro disponível 24/7</span>
+                                        </div>
+                                        <div class="checklist-item">
+                                            <div class="checklist-check">✓</div>
+                                            <span>Ganhos são sempre seus</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Onde no fluxo</div>
+                                <div class="info-text">Tela de detalhes e FAQ curto expandível</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resolve</div>
+                                <div class="info-text">Medo de letras miúdas e desconfiança estrutural</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text">Checklist gera sensação de <strong>contrato psicológico claro</strong>.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea 7 -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">7</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">Explicação direta do "Até 13%"</h3>
+                            <span class="idea-model">🔍 Modelo 3 — Cético Desconfiado</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen">
+                                    <div style="text-align: center; padding: 15px 0;">
+                                        <div style="font-size: 0.65rem; color: #6B7280;">Taxa atual</div>
+                                        <div style="font-size: 1.5rem; font-weight: 800; color: #00A650;">Até 13%</div>
+                                        <div style="font-size: 0.65rem; color: #6B7280;">ao ano</div>
+                                    </div>
+                                    <div class="tooltip-box">
+                                        <strong>Por que "até"?</strong><br><br>
+                                        A taxa pode mudar com o mercado. Hoje está em 13%.<br><br>
+                                        <span style="color: #86EFAC;">✓ O que você já ganhou é sempre seu.</span>
+                                    </div>
+                                    <div style="margin-top: 15px; padding: 12px; background: #FEF3C7; border-radius: 10px; font-size: 0.65rem; color: #92400E; text-align: center;">
+                                        💡 A taxa muda, seus ganhos não somem.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Onde no fluxo</div>
+                                <div class="info-text">Onde aparece "Hasta 13%" — tooltip obrigatório</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resolve</div>
+                                <div class="info-text">Sensação de pegadinha e medo de perder ganhos já acumulados</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text">Não esconder a complexidade → <strong>domesticar a complexidade</strong>.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea 8 -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">8</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">Prova social silenciosa</h3>
+                            <span class="idea-model">🔍 Todos os modelos (especialmente 3)</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen">
+                                    <div class="screen-header">
+                                        <div style="font-size: 0.65rem; color: #6B7280;">Sua conta</div>
+                                        <div style="font-size: 1.2rem; font-weight: 700; color: #374151;">Conta Remunerada</div>
+                                    </div>
+                                    <div style="padding: 15px 0;">
+                                        <div style="font-size: 0.65rem; color: #6B7280;">Rendendo a</div>
+                                        <div style="font-size: 1.5rem; font-weight: 800; color: #00A650;">13% ao ano</div>
+                                    </div>
+                                    <div class="social-proof">
+                                        <div class="social-proof-avatars">
+                                            <div class="social-proof-avatar">👤</div>
+                                            <div class="social-proof-avatar">👤</div>
+                                            <div class="social-proof-avatar">👤</div>
+                                            <div class="social-proof-avatar">+</div>
+                                        </div>
+                                        <div class="social-proof-text">
+                                            <strong>Milhões de pessoas</strong> já usam a conta para guardar e usar dinheiro todo dia.
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 15px; font-size: 0.6rem; color: #9CA3AF; text-align: center;">
+                                        Sem números exagerados. Fato real.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Onde no fluxo</div>
+                                <div class="info-text">Tela de confirmação e detalhe da conta</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resolve</div>
+                                <div class="info-text">"Sou o único caindo nisso?" — reduz percepção de risco</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text">Prova social funciona melhor quando <strong>não parece publicidade</strong>.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Insights Section -->
+            <div class="insights-section">
+                <div class="insights-header">
+                    <div class="insights-badge">🔎 Padrões Identificados</div>
+                    <h2 class="insights-title">Insights do Crazy 8s</h2>
+                </div>
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <div class="insight-icon">💧</div>
+                        <h3 class="insight-title">Disponibilidade > Rendimento</h3>
+                        <p class="insight-desc">Liquidez é o verdadeiro valor emocional para o usuário.</p>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon">🔁</div>
+                        <h3 class="insight-title">Repetição ≠ Redundância</h3>
+                        <p class="insight-desc">O mesmo conceito precisa aparecer em momentos diferentes do fluxo.</p>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon">👁️</div>
+                        <h3 class="insight-title">Prova > Explicação</h3>
+                        <p class="insight-desc">Histórico, simulador e mensagens contextuais vencem textos educativos.</p>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon">💊</div>
+                        <h3 class="insight-title">"Até" precisa de antídoto</h3>
+                        <p class="insight-desc">Nunca deixar essa palavra sozinha sem explicação.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ESPAÑOL -->
+        <section id="es-section" class="language-section">
+            <div class="ideas-grid">
+                
+                <!-- Idea 1 ES -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">1</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">"Rinde cada día. Retira cuando quieras."</h3>
+                            <span class="idea-model">🏦 Modelo 1 — Inversionista Tradicional</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen">
+                                    <div class="screen-header">
+                                        <div class="screen-balance-label">Tu saldo</div>
+                                        <div class="screen-balance">$5,240.00</div>
+                                    </div>
+                                    <div class="screen-hero">
+                                        <h3>Rinde todos los días.<br>Tu dinero queda libre.</h3>
+                                        <p>El 13% es anualizado. Ganas un poquito cada día.</p>
+                                    </div>
+                                    <div style="text-align: center; padding: 15px;">
+                                        <div style="font-size: 0.65rem; color: #6B7280;">Ganaste hoy</div>
+                                        <div style="font-size: 1.2rem; font-weight: 700; color: #00A650;">+$1.87</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Dónde en el flujo</div>
+                                <div class="info-text">Hero del home de la cuenta remunerada y primera pantalla post-activación</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resuelve</div>
+                                <div class="info-text">Miedo a dinero bloqueado y confusión entre "anual" y "tiempo mínimo"</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text">Este texto necesita ser <strong>persistente</strong>, no solo educativo. Repetición aquí es virtud.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea 2 ES -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">2</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">Simulador "¿Y si retiro hoy?"</h3>
+                            <span class="idea-model">🏦 Modelo 1 — Inversionista Tradicional</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen">
+                                    <div class="screen-header">
+                                        <div class="screen-balance-label">Rindiendo</div>
+                                        <div class="screen-balance">$3,500.00</div>
+                                    </div>
+                                    <div class="screen-simulator">
+                                        <div style="font-size: 0.7rem; font-weight: 600; margin-bottom: 8px; color: #374151;">🧮 Si retiro hoy...</div>
+                                        <div class="simulator-input">
+                                            ¿Cuánto quieres retirar? <strong>$3,500.00</strong>
+                                        </div>
+                                        <div class="simulator-result">
+                                            <div class="amount">+$42.35</div>
+                                            <div class="label">Ganaste hasta ahora</div>
+                                            <div style="font-size: 0.6rem; color: #059669; margin-top: 5px; font-weight: 600;">✓ Puedes usarlo ahora. Es tuyo.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Dónde en el flujo</div>
+                                <div class="info-text">Pantalla de detalles del rendimiento y tooltip en el saldo</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resuelve</div>
+                                <div class="info-text">Ansiedad de pérdida y sensación de "necesito esperar"</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text">Transforma un concepto abstracto en <strong>prueba concreta</strong>. No es educativo, es tranquilizador.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea 3 ES -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">3</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">Línea del tiempo diaria de ganancias</h3>
+                            <span class="idea-model">🏦 Modelo 1 + 🔍 Modelo 3</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen">
+                                    <div style="font-size: 0.75rem; font-weight: 700; margin-bottom: 12px; color: #374151;">📈 Historial de ganancias</div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-date">Hoy, 23 Ene</div>
+                                        <div class="timeline-amount">+$1.87</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-date">Ayer, 22 Ene</div>
+                                        <div class="timeline-amount">+$1.84</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-date">21 Ene</div>
+                                        <div class="timeline-amount">+$1.81</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-date">20 Ene</div>
+                                        <div class="timeline-amount">+$1.79</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-date">19 Ene</div>
+                                        <div class="timeline-amount">+$1.76</div>
+                                    </div>
+                                    <div style="text-align: center; margin-top: 15px; padding: 10px; background: #ECFDF5; border-radius: 8px;">
+                                        <div style="font-size: 0.6rem; color: #6B7280;">Total este mes</div>
+                                        <div style="font-size: 1rem; font-weight: 700; color: #00A650;">+$42.35</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Dónde en el flujo</div>
+                                <div class="info-text">Historial de la cuenta y detalle del rendimiento</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resuelve</div>
+                                <div class="info-text">Escepticismo ("¿esto existe de verdad?") y sensación de truco oculto</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text">Ver dinero cayendo cada día <strong>mata más objeciones</strong> que cualquier texto.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea 4 ES -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">4</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">Quiebre explícito del modelo "cashback"</h3>
+                            <span class="idea-model">🎁 Modelo 2 — Consumidor de Recompensas</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen">
+                                    <div style="font-size: 0.8rem; font-weight: 700; margin-bottom: 12px; text-align: center; color: #374151;">¿Cómo funciona?</div>
+                                    <table class="comparison-table">
+                                        <thead>
+                                            <tr>
+                                                <th>❌ No es</th>
+                                                <th>✅ Es</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Cashback</td>
+                                                <td>Rendimiento automático</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Necesitas pagar algo</td>
+                                                <td>Solo dejar el dinero</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Depende de compras</td>
+                                                <td>Independiente del uso</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div style="background: #EFF6FF; padding: 12px; border-radius: 10px; margin-top: 15px; text-align: center;">
+                                        <div style="font-size: 0.75rem; font-weight: 700; color: #1D4ED8;">No necesitas usar.</div>
+                                        <div style="font-size: 0.75rem; font-weight: 700; color: #1D4ED8;">Solo dejar.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Dónde en el flujo</div>
+                                <div class="info-text">Onboarding y primera pantalla educativa</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resuelve</div>
+                                <div class="info-text">Asociación errónea con pagos y expectativa de "ganancia por acción"</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text"><strong>Comparación explícita > metáforas.</strong> Los usuarios entienden mejor contrastes directos.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea 5 ES -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">5</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">Mensaje antes del primer gasto</h3>
+                            <span class="idea-model">🏦 Modelo 1 + 🎁 Modelo 2</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen" style="background: rgba(0,0,0,0.3); padding: 0;">
+                                    <div style="padding: 15px; opacity: 0.5;">
+                                        <div style="font-size: 0.7rem; color: white;">Pagando a</div>
+                                        <div style="font-size: 0.9rem; font-weight: 700; color: white;">OXXO - Compra</div>
+                                        <div style="font-size: 1.2rem; font-weight: 800; color: white; margin-top: 5px;">$150.00</div>
+                                    </div>
+                                    <div class="bottom-sheet">
+                                        <div class="bottom-sheet-handle"></div>
+                                        <div style="font-size: 1.2rem; text-align: center; margin-bottom: 10px;">✨</div>
+                                        <div class="bottom-sheet-text">
+                                            <strong>Puedes gastar tranquilo.</strong><br><br>
+                                            Tu dinero rindió hasta ahora y <strong>sigue rindiendo</strong> en lo que quede.
+                                        </div>
+                                        <div style="background: #00A650; color: white; text-align: center; padding: 12px; border-radius: 10px; margin-top: 15px; font-size: 0.8rem; font-weight: 600;">
+                                            Entendido, continuar
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Dónde en el flujo</div>
+                                <div class="info-text">Primera vez que el usuario intenta pagar algo con saldo rindiendo</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resuelve</div>
+                                <div class="info-text">Miedo a "perder el rendimiento" al gastar y bloqueo en el uso del dinero</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text">Intervención en el <strong>momento de la duda real</strong>, no antes.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea 6 ES -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">6</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">"Sin truco": sello de transparencia</h3>
+                            <span class="idea-model">🔍 Modelo 3 — Escéptico Desconfiado</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen">
+                                    <div style="font-size: 0.8rem; font-weight: 700; margin-bottom: 15px; text-align: center; color: #374151;">🛡️ Sin letra pequeña</div>
+                                    <div style="background: #F0FDF4; border: 2px solid #86EFAC; border-radius: 14px; padding: 15px;">
+                                        <div class="checklist-item">
+                                            <div class="checklist-check">✓</div>
+                                            <span>Sin monto mínimo</span>
+                                        </div>
+                                        <div class="checklist-item">
+                                            <div class="checklist-check">✓</div>
+                                            <span>Sin comisión de mantenimiento</span>
+                                        </div>
+                                        <div class="checklist-item">
+                                            <div class="checklist-check">✓</div>
+                                            <span>Sin tareas obligatorias</span>
+                                        </div>
+                                        <div class="checklist-item">
+                                            <div class="checklist-check">✓</div>
+                                            <span>Dinero disponible 24/7</span>
+                                        </div>
+                                        <div class="checklist-item">
+                                            <div class="checklist-check">✓</div>
+                                            <span>Tus ganancias son siempre tuyas</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Dónde en el flujo</div>
+                                <div class="info-text">Pantalla de detalles y FAQ corto expandible</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resuelve</div>
+                                <div class="info-text">Miedo a letra pequeña y desconfianza estructural</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text">Checklist genera sensación de <strong>contrato psicológico claro</strong>.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea 7 ES -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">7</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">Explicación directa del "Hasta 13%"</h3>
+                            <span class="idea-model">🔍 Modelo 3 — Escéptico Desconfiado</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen">
+                                    <div style="text-align: center; padding: 15px 0;">
+                                        <div style="font-size: 0.65rem; color: #6B7280;">Tasa actual</div>
+                                        <div style="font-size: 1.5rem; font-weight: 800; color: #00A650;">Hasta 13%</div>
+                                        <div style="font-size: 0.65rem; color: #6B7280;">al año</div>
+                                    </div>
+                                    <div class="tooltip-box">
+                                        <strong>¿Por qué "hasta"?</strong><br><br>
+                                        La tasa puede cambiar con el mercado. Hoy está en 13%.<br><br>
+                                        <span style="color: #86EFAC;">✓ Lo que ya ganaste es siempre tuyo.</span>
+                                    </div>
+                                    <div style="margin-top: 15px; padding: 12px; background: #FEF3C7; border-radius: 10px; font-size: 0.65rem; color: #92400E; text-align: center;">
+                                        💡 La tasa cambia, tus ganancias no desaparecen.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Dónde en el flujo</div>
+                                <div class="info-text">Donde aparece "Hasta 13%" — tooltip obligatorio</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resuelve</div>
+                                <div class="info-text">Sensación de trampa y miedo a perder ganancias ya acumuladas</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text">No esconder la complejidad → <strong>domesticar la complejidad</strong>.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea 8 ES -->
+                <div class="idea-card">
+                    <div class="idea-header">
+                        <div class="idea-number">8</div>
+                        <div class="idea-title-section">
+                            <h3 class="idea-title">Prueba social silenciosa</h3>
+                            <span class="idea-model">🔍 Todos los modelos (especialmente 3)</span>
+                        </div>
+                    </div>
+                    <div class="idea-content">
+                        <div class="mockup-side">
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                                <div class="phone-screen">
+                                    <div class="screen-header">
+                                        <div style="font-size: 0.65rem; color: #6B7280;">Tu cuenta</div>
+                                        <div style="font-size: 1.2rem; font-weight: 700; color: #374151;">Cuenta Remunerada</div>
+                                    </div>
+                                    <div style="padding: 15px 0;">
+                                        <div style="font-size: 0.65rem; color: #6B7280;">Rindiendo a</div>
+                                        <div style="font-size: 1.5rem; font-weight: 800; color: #00A650;">13% al año</div>
+                                    </div>
+                                    <div class="social-proof">
+                                        <div class="social-proof-avatars">
+                                            <div class="social-proof-avatar">👤</div>
+                                            <div class="social-proof-avatar">👤</div>
+                                            <div class="social-proof-avatar">👤</div>
+                                            <div class="social-proof-avatar">+</div>
+                                        </div>
+                                        <div class="social-proof-text">
+                                            <strong>Millones de personas</strong> ya usan la cuenta para guardar y usar dinero cada día.
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 15px; font-size: 0.6rem; color: #9CA3AF; text-align: center;">
+                                        Sin números exagerados. Hecho real.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-side">
+                            <div class="info-block flow">
+                                <div class="info-label"><span class="icon">📍</span> Dónde en el flujo</div>
+                                <div class="info-text">Pantalla de confirmación y detalle de la cuenta</div>
+                            </div>
+                            <div class="info-block resolve">
+                                <div class="info-label"><span class="icon">✅</span> Resuelve</div>
+                                <div class="info-text">"¿Soy el único cayendo en esto?" — reduce percepción de riesgo</div>
+                            </div>
+                            <div class="info-block ux">
+                                <div class="info-label"><span class="icon">💡</span> UX Note</div>
+                                <div class="info-text">Prueba social funciona mejor cuando <strong>no parece publicidad</strong>.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Insights Section ES -->
+            <div class="insights-section">
+                <div class="insights-header">
+                    <div class="insights-badge">🔎 Patrones Identificados</div>
+                    <h2 class="insights-title">Insights del Crazy 8s</h2>
+                </div>
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <div class="insight-icon">💧</div>
+                        <h3 class="insight-title">Disponibilidad > Rendimiento</h3>
+                        <p class="insight-desc">La liquidez es el verdadero valor emocional para el usuario.</p>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon">🔁</div>
+                        <h3 class="insight-title">Repetición ≠ Redundancia</h3>
+                        <p class="insight-desc">El mismo concepto necesita aparecer en momentos diferentes del flujo.</p>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon">👁️</div>
+                        <h3 class="insight-title">Prueba > Explicación</h3>
+                        <p class="insight-desc">Historial, simulador y mensajes contextuales vencen textos educativos.</p>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon">💊</div>
+                        <h3 class="insight-title">"Hasta" necesita antídoto</h3>
+                        <p class="insight-desc">Nunca dejar esa palabra sola sin explicación.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function showLanguage(lang) {
+            document.querySelectorAll('.language-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(lang + '-section').classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
